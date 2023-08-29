@@ -18,7 +18,6 @@ notes.get("/notes", (req, res) => {
 // (look into npm packages that could do this for you).
 notes.post("/notes", (req, res) => {
   // destructure
-  console.log(req.body);
   const { title, text } = req.body;
 
   // if both properties are there make a new note with id
@@ -26,7 +25,7 @@ notes.post("/notes", (req, res) => {
     const newNote = {
       title,
       text,
-      note_id: uuidv4(),
+      id: uuidv4(),
     };
 
     // read prev files
@@ -35,10 +34,13 @@ notes.post("/notes", (req, res) => {
         console.error(err);
       } else {
         const parsedNotes = JSON.parse(data);
+        console.log(parsedNotes);
         parsedNotes.push(newNote);
         // write file
         fs.writeFile("./db/db.json", JSON.stringify(parsedNotes), (err) =>
-          err ? console.error(err) : console.log("Note added!")
+          err
+            ? console.error(err)
+            : console.log(`Note "${newNote.title}" added!`)
         );
       }
     });
@@ -51,6 +53,21 @@ notes.post("/notes", (req, res) => {
 // `DELETE /api/notes/:id` should receive a query parameter that contains the id of a note to delete. To delete a note,
 // you'll need to read all notes from the `db.json` file, remove the note with the given `id` property,
 // and then rewrite the notes to the `db.json` file.
-// notes.delete("/api/notes/:id", (req, res) => {});
+notes.delete("/notes/:id", (req, res) => {
+  fs.readFile("./db/db.json", "utf8", (err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      let parsedNotes = JSON.parse(data);
+      parsedNotes = parsedNotes.filter((note) => note.id !== req.params.id);
+      // const deletedNote = parsedNotes.find(({ id }) => id === req.params.id);
+      // console.log(deletedNote);
+      fs.writeFile("./db/db.json", JSON.stringify(parsedNotes), (err) =>
+        err ? console.error(err) : console.log(`Note list updated!`)
+      );
+    }
+  });
+  res.redirect("/notes");
+});
 
 module.exports = notes;
