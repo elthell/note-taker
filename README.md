@@ -12,7 +12,7 @@ N/A
 
 Repo: https://github.com/elthell/note-taker
 
-Deployment: https://agile-spire-20664-b55aa46ddb6c.herokuapp.com/
+Deployment: https://note-taker-20664-0064acf3cbe5.herokuapp.com/
 
 Preview:
 ![A light themed app labeled "Note Taker". On the right side are saved notes and on the left is a blank note format to be filled out](./public/assets/images/11-express-homework-demo-01.png)
