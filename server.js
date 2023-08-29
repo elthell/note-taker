@@ -1,9 +1,13 @@
 const express = require("express");
 const path = require("path");
+const notesRouter = require("./routes/notes");
 
 const PORT = process.env.PORT || 3001;
 
 const app = express();
+
+// route for notes
+app.use("/api", notesRouter);
 
 // middleware
 app.use(express.json());
