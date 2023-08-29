@@ -1,6 +1,1 @@
-[
-    {
-        "title":"Test Title",
-        "text":"Test text"
-    }
-]
+[{"title":"Test Title","text":"Test text"},{"title":"new note","text":"new text","note_id":"db8d30e2-8d5c-427c-b752-d0d4887bcd69"},{"title":"Groceries","text":"need milk, cream, and bread","note_id":"c7b026da-9369-4f6c-a9b3-797d236a1c55"},{"title":"test","text":"test","note_id":"cf00d484-f35b-403c-bcd9-88606b8ad115"}]

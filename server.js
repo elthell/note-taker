@@ -6,13 +6,13 @@ const PORT = process.env.PORT || 3001;
 
 const app = express();
 
-// route for notes
-app.use("/api", notesRouter);
-
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+
+// route for notes
+app.use("/api", notesRouter);
 
 // `GET /notes` should return the `notes.html` file.
 app.get("/notes", function (req, res) {
