@@ -3,15 +3,22 @@ const { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
 
 // `GET /api/notes` should read the `db.json` file and return all saved notes as JSON.
-notes.get('/api/notes', (req, res) => {
-  fs.readFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
+notes.get("/notes", (req, res) => {
+  fs.readFile("./db/db.json", "utf8", (err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      res.json(JSON.parse(data));
+    }
+  });
 });
 
 // `POST /api/notes` should receive a new note to save on the request body, add it to the `db.json` file,
 // and then return the new note to the client. You'll need to find a way to give each note a unique id when it's saved
 // (look into npm packages that could do this for you).
-notes.post('/api/notes', (req, res) => {
-  // pull req body
+notes.post("/notes", (req, res) => {
+  console.log(req);
+  // destructure note
   const { title, text } = req.body;
 
   // make new note with id
@@ -23,20 +30,20 @@ notes.post('/api/notes', (req, res) => {
     };
 
     // read prev files
-    fs.readFile('./db/db.json', 'utf8', (err, data) => {
+    fs.readFile("./db/db.json", "utf8", (err, data) => {
       if (err) {
         console.error(err);
       } else {
         const parsedNotes = JSON.parse(data);
         parsedNotes.push(newNote);
         // write file
-        fs.writeFile('./db/db.json', JSON.stringify(reqBody), (err) =>
-          err ? console.error(err) : console.log('Note added!')
+        fs.writeFile("./db/db.json", JSON.stringify(reqBody), (err) =>
+          err ? console.error(err) : console.log("Note added!")
         );
       }
     });
   } else {
-    res.json('Error in adding note');
+    res.json("Error in adding note");
   }
 });
 
